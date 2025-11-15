@@ -16,7 +16,7 @@ jest.mock('ethers', () => ({
 const MockContract = Contract as jest.Mock;
 
 // --- Test Suite ---
-describe('resilientEventListener', () => {
+describe('Testing resilientEventListener function', () => {
   // A fresh set of mock arguments for each test to ensure isolation.
   const getMockArgs = () => ({
     rpcUrl: 'ws://test-url.com',
@@ -97,11 +97,8 @@ describe('resilientEventListener', () => {
 
     it('should set up event handlers on the WebSocket instance', () => {
       resilientEventListener(getMockArgs());
-      // The event handlers are assigned in the function, so we simulate that
-      // by capturing the arguments to the mock `on` function if it were used,
-      // but since they are assigned directly (e.g. ws.onopen = ...),
-      // we can just check that a connection was attempted.
-      // A more complex test could spy on the assignment itself.
+      // Check that a WebSocket connection is created. 
+      // Event handlers are assigned directly in the function, so we just verify the connection was attempted.
       expect(MockWebSocket).toHaveBeenCalledTimes(1);
     });
   });

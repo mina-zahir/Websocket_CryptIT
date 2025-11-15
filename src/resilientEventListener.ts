@@ -20,6 +20,21 @@ export interface ResilientEventListenerArgs {
 const DEFAULT_EXPECTED_PONG_BACK = 15000;
 const DEFAULT_KEEP_ALIVE_CHECK_INTERVAL = 60 * 1000;
 
+/**
+ * This function creates a resilient event listener for a given contract on an EVM-based network.
+ * It uses a WebSocket connection to the EVM node specified by the rpcUrl.
+ * The event listener is resilient in the sense that it will automatically reconnect in case of connection errors or closure.
+ * 
+ * @param args - The arguments for the event listener.
+ * @param args.rpcUrl - The URL of the EVM node to connect to.
+ * @param args.contractAddress - The address of the contract to listen to.
+ * @param args.abi - The ABI of the contract.
+ * @param args.eventName - The name of the event to listen to.
+ * @param args.log - An optional logging function. If provided, it will be called with log messages.
+ * @param args.callback - An optional callback function. If provided, it will be called with the parsed log data whenever an event is received.
+ * @param args.keepAliveCheckInterval - How often the WebSocket connection should be checked to ensure it's still alive.
+ * @param args.expectedPongBack - The maximum time to wait for a "pong" response after sending a "ping"; if it doesn’t arrive, the connection is considered unhealthy.
+ */
 export function resilientEventListener(args: ResilientEventListenerArgs) {
     let ws: WebSocket | null = null;
     let pingTimeout: NodeJS.Timeout | null = null;
@@ -156,7 +171,6 @@ export function resilientEventListener(args: ResilientEventListenerArgs) {
         stopped = true;
         if (ws) {
             // Unsubscribe from the event
-            // Note: This requires the subscription ID. The implementation for this is left out for brevity.
             ws.close();
             ws = null;
         }
