@@ -1,0 +1,36 @@
+{
+  "name": "cryptit",
+  "version": "1.0.0",
+  "description": "This is for interview project",
+  "keywords": [
+    "websocket",
+    "jest",
+    "ws",
+    "cryptit"
+  ],
+  "license": "ISC",
+  "author": "Mina Zahirjozdani",
+  "type": "typescript",
+  "main": "index.ts",
+  "scripts": {
+    "start": "ts-node src/index.ts",
+    "test": "jest",
+    "test:unit": "jest",
+    "test:e2e": "npx playwright test"
+  },
+  "dependencies": {
+    "ethers": "^6.15.0",
+    "express": "^5.1.0",
+    "isomorphic-ws": "^5.0.0",
+    "ts-node": "^10.9.2",
+    "ws": "^8.18.3"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.5",
+    "@types/jest": "^30.0.0",
+    "@types/node": "^24.9.2",
+    "jest": "^30.2.0",
+    "ts-jest": "^29.4.5",
+    "typescript": "^5.9.3"
+  }
+}
