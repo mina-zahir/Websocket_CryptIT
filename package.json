@@ -15,8 +15,7 @@
   "scripts": {
     "start": "ts-node src/index.ts",
     "test": "jest",
-    "test:unit": "jest",
-    "test:e2e": "npx playwright test"
+    "test:unit": "jest"
   },
   "dependencies": {
     "ethers": "^6.15.0",
