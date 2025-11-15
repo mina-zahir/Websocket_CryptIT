@@ -3,7 +3,7 @@ import { Contract, InterfaceAbi, LogDescription } from "ethers";
 import { IncomingMessage, ServerResponse } from 'http';
 
 // ENHANCEMENT: More specific types for log levels
-type LogLevel = 'debug' | 'info' | 'warn' | 'error';
+export type LogLevel = 'debug' | 'info' | 'warn' | 'error';
 
 export interface ResilientEventListenerArgs {
     rpcUrl: string,

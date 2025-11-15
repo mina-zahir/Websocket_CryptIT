@@ -1,6 +1,6 @@
 import express from 'express';
 import path from 'path';
-import { LogLevel, resilientEventListener, ResilientEventListenerArgs } from './resilientEventListener';
+import { resilientEventListener, ResilientEventListenerArgs } from './resilientEventListener';
 import { usdtAbi } from './usdtAbi';
 import { Contract, LogDescription } from 'ethers';
 import WebSocket from 'isomorphic-ws';
@@ -11,27 +11,6 @@ function safeStringify(obj: any): string {
     typeof value === 'bigint' ? value.toString() : value
   );
 }
-
-export const resArgs: ResilientEventListenerArgs = {
-  rpcUrl: 'wss://mainnet.infura.io/ws/v3/e27ea5440e3845e089af65626af436e9',
-  contractAddress: '0xdAC17F958D2ee523a2206206994597C13D831ec7',
-  abi: usdtAbi,
-  eventName: "Transfer",
-  log: (level, msg) => console.log(`[${level.toUpperCase()}] ${msg}`),
-  callback: (event: any) => {
-    if (event) {
-      // const evStr = `Event ${event.name}: ${JSON.stringify(event.args)}`;
-      const evStr = `Event ${event.name}: ${safeStringify(event.args)}`;
-      events.push(evStr);
-      console.log(evStr);
-    }
-  },
-  keepAliveCheckInterval: 0,
-  expectedPongBack: 0
-}
-
-
-
 
 const app = express();
 const PORT = 3001;
@@ -71,9 +50,25 @@ app.listen(PORT, () => {
 // to avoid data loss on server restart
 // and to handle larger volumes of events more efficiently
 const events: string[] = [];
+export const resArgs: ResilientEventListenerArgs = {
+  rpcUrl: 'wss://mainnet.infura.io/ws/v3/e27ea5440e3845e089af65626af436e9',
+  contractAddress: '0xdAC17F958D2ee523a2206206994597C13D831ec7',
+  abi: usdtAbi,
+  eventName: "Transfer",
+  log: (level, msg) => console.log(`[${level.toUpperCase()}] ${msg}`),
+  callback: (event: any) => {
+    if (event) {
+      // const evStr = `Event ${event.name}: ${JSON.stringify(event.args)}`;
+      const evStr = `Event ${event.name}: ${safeStringify(event.args)}`;
+      events.push(evStr);
+      console.log(evStr);
+    }
+  },
+  keepAliveCheckInterval: 0,
+  expectedPongBack: 0
+}
 
 const listener = resilientEventListener(resArgs);
-
 
 // API ساده برای ارسال رویدادها به کلاینت در polling
 app.get('/events', (req, res) => {
