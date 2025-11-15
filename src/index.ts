@@ -33,10 +33,10 @@ export const resArgs: ResilientEventListenerArgs = {
   abi: usdtAbi,
   eventName: "Transfer",
   log: (level, msg) => console.log(`[${level.toUpperCase()}] ${msg}`),
-  callback: (event: any) => {
-    if (event) {
+  callback: (logEvent: LogDescription | null) => {
+    if (logEvent) {
       // const evStr = `Event ${event.name}: ${JSON.stringify(event.args)}`;
-      const evStr = `Event ${event.name}: ${safeStringify(event.args)}`;
+      const evStr = `Event ${logEvent.name}: ${safeStringify(logEvent.args)}`;
       events.push(evStr);
       console.log(evStr);
     }
