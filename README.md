@@ -1,4 +1,8 @@
 # CryptIT
+For the implementation, I used the **Express Framework** to set up a simple web server and establish a connection to the **Ethereum network** using the **ethers** and **isomorphic-ws** libraries. I was able to establish a real-time connection to the Ethereum network via the **Infura WebSocket**. After successfully testing the project, I improved the WebSocket client in several areas.
+
+----
+
 My main goal was to refactor the WebSocket client in **resilientEventListener.ts** to make it much 
 more robust and resilient to errors, while ensuring it continued to work with the rest of the 
 application.
