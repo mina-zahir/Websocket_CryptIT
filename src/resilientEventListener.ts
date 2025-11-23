@@ -82,7 +82,7 @@ export function resilientEventListener(args: ResilientEventListenerArgs) {
             method: "net_listening",
             params: [],
         };
-
+        //FIX : prevent "any" type and using structural event type
         ws.onerror = (err: WebSocket.ErrorEvent) => {
             log('error', 'WebSocket error:', err.message);
         };
@@ -99,7 +99,7 @@ export function resilientEventListener(args: ResilientEventListenerArgs) {
                 reconnectDelay = Math.min(reconnectDelay * 2, 30000); // Max delay of 30 seconds
             }
         };
-
+        //FIX : prevent "any" type and using structural event type
         ws.onmessage = (event: WebSocket.MessageEvent) => {
             let parsedData;
             try {
@@ -107,6 +107,7 @@ export function resilientEventListener(args: ResilientEventListenerArgs) {
                 if (typeof event.data === 'string') {
                     parsedData = JSON.parse(event.data);
                 } else if (event.data instanceof Buffer) {
+                    // Switched from ArrayBuffer to Buffer for better compatibility with Node.js/Express 
                     parsedData = JSON.parse(event.data.toString());
                 } else {
                     log('warn', 'Received unexpected data type from WebSocket.', event.data);
